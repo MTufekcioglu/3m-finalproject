@@ -19,24 +19,27 @@ model.eval()
 # Dictionary of species-specific care need thresholds 
 # Each entry formatted as [(temp_low, temp_high), (moist_low, moist_high)]
 # Thresholds estimated based on information from https://www.picturethisai.com/
-plant_info = {'Apple' : [(0, 35), (450, 800)],
-              'Blueberry': [(5, 30), (450, 800)], 
-              'Cherry' : [(5, 35), (450, 800)],
-              'Corn' : [(20, 41), (300, 800)], 
-              'Grape' : [(5, 35), (550, 800)], 
-              'Orange' : [(20, 38), (450, 800)],
-              'Peach' : [(5, 35), (450, 800)], 
-              'Bell Pepper' : [(20, 38), (650, 800)], 
-              'Potato' : [(20, 35), (550, 800)], 
-              'Raspberry' : [(20, 35), (450, 800)], 
-              'Soybean' : [(20, 38), (650, 800)],
-              'Squash' : [(20, 38), (650, 800)], 
-              'Strawberry' : [(5, 32), (650, 800)], 
-              'Tomato' : [(20, 35), (650, 800)],
-              'Basil' : [(20, 38), (650, 800)]}
+plant_info = {'Apple' : [(0, 35), (450, 900)],
+              'Blueberry': [(5, 30), (450, 900)], 
+              'Cherry' : [(5, 35), (450, 900)],
+              'Corn' : [(20, 41), (300, 900)], 
+              'Grape' : [(5, 35), (550, 900)], 
+              'Orange' : [(20, 38), (450, 900)],
+              'Peach' : [(5, 35), (450, 900)], 
+              'Bell Pepper' : [(20, 38), (650, 900)], 
+              'Potato' : [(20, 35), (550, 900)], 
+              'Raspberry' : [(20, 35), (450, 900)], 
+              'Soybean' : [(20, 38), (650, 900)],
+              'Squash' : [(20, 38), (650, 900)], 
+              'Strawberry' : [(5, 32), (650, 900)], 
+              'Tomato' : [(20, 35), (650, 900)],
+              'Basil' : [(20, 38), (650, 900)]}
 
 # Initialize timer
 start_time = time.time()
+
+# Set a flag so we identify the plant on the first loop iteration
+first = 1
 
 while True:
         # Read moisture
@@ -49,7 +52,7 @@ while True:
         ### Performing the classification every 6 hours ###
 
         curr_time = time.time()
-        if (curr_time - start_time > 21600):
+        if (curr_time - start_time > 21600 or first == 1):
                  # Getting the current images folder
                 images = ImageFolder('./images/', transform=transforms.ToTensor())
 
@@ -63,6 +66,9 @@ while True:
 
                 # Reset timer
                 start_time = time.time()
+
+                # Disable the first loop iteration flag
+                first = 0
        
         ### End of classification segment ###
 
