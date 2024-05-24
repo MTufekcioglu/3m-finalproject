@@ -40,13 +40,11 @@ start_time = time.time()
 
 while True:
         # Read moisture
-        #touch = ss.moisture_read()
-        touch = 400
+        touch = ss.moisture_read()
 
         # Read temp
-        #temp =ss.get_temp()
-        #temp = round(temp, 2)
-        temp = 29
+        temp =ss.get_temp()
+        temp = round(temp, 2)
 
         ### Performing the classification every 6 hours ###
 
@@ -62,6 +60,7 @@ while True:
                 plant_needs = plant_info[species]
                 thresh_low_temp, thresh_high_temp = plant_needs[0]
                 thresh_low_moist, thresh_high_moist = plant_needs[1]
+
                 # Reset timer
                 start_time = time.time()
        
@@ -112,6 +111,6 @@ while True:
 
 
         # Add a delay between reading measurements
-        time.sleep(20)
+        time.sleep(1)
 
 
